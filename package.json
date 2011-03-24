@@ -1,0 +1,23 @@
+{
+  "name": "node-twilio",
+  "version": "0.0.2",
+  "description": "Simple TwilioML and conversation helper library.",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/votizen/node-twilio.git"
+  },
+  "main": "./",
+  "bugs": {
+    "web": "http://github.com/votizen/node-twilio/issues"
+  },
+  "author": "Votizen Inc. <admin@votizen.com>",
+  "licenses": [{
+    "type": "MIT"
+  }],
+  "engines": {
+    "node": ">=0.4.2"
+  },
+  "dependencies": {
+    "ent": ">=0.0.1"
+  }
+}
