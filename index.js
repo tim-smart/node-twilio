@@ -1,6 +1,7 @@
 var ent         = require('ent'),
     querystring = require('querystring'),
     events      = require('events'),
+    nest        = require('nest'),
     util        = require('util');
 
 /**
@@ -321,5 +322,52 @@ Conversation.prototype.handleRequest = function (request, response) {
 
   request.on('error', function (error) {
     self.emit('error', error);
+  });
+};
+
+/**
+ * Provide a Twilio REST client for the REST api using `nest`.
+ *
+ * @constructor
+ * @extends {nest.Client}
+ * @param {Object} options
+ */
+var Client = function (options) {
+  var auth;
+
+  options || (options = {});
+
+  auth = new Buffer(options.sid + ':' + options.token).toString('base64');
+
+  nest.Client.call(this, {
+    host:             'api.twilio.com',
+    path:             '/2010-04-01/',
+    secure:           true,
+    headers: {
+      Authorization: 'Basic ' + auth,
+      Accept:        'application/json'
+    },
+    response:        'json'
+  });
+};
+
+util.inherits(Client, nest.Client);
+
+exports.Client = Client;
+
+/**
+ * Override the nest _request to add relevant logic.
+ *
+ * @param {Object} options: A hash of options for the request.
+ * @param {Function} callback
+ * @private
+ */
+Client.prototype._request = function (method, options, callback) {
+  callback = callback || function () {};
+
+  options.path = options.path + '.json';
+
+  return nest.Client.prototype._request.call(this, method, options, function (error, response, data) {
+    callback(error, data, response);
   });
 };
