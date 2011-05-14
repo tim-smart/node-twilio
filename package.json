@@ -1,6 +1,6 @@
 {
   "name": "node-twilio",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Simple TwilioML and conversation helper library.",
   "repository": {
     "type": "git",
