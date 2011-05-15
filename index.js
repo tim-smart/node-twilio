@@ -275,7 +275,7 @@ Conversation.prototype.createSms = function (text) {
  * @param {HttpRequest} request
  * @param {HttpResponse} response
  */
-Conversation.prototype.handleRequest = function (request, response, extra_args) {
+Conversation.prototype.handleRequest = function (request, response, callback) {
   var self  = this,
       index = request.url.indexOf(this.path);
 
@@ -314,12 +314,23 @@ Conversation.prototype.handleRequest = function (request, response, extra_args) 
     self.emit('request', body, response);
 
     var args = [response, body];
-    args.push.apply(args, extra_args)
 
     if ('' === path) {
-      self.start.apply(self, args);
+      if (callback) {
+        return callback(body, function (extra) {
+          args.push.apply(args, extra)
+          self.start.apply(self, args)
+        });
+      }
+      self.start.apply(self, response, body);
     } else if ('function' === typeof self[path]) {
-      self[path].apply(self, args);
+      if (callback) {
+        return callback(body, function (extra) {
+          args.push.apply(args, extra)
+          self[path].apply(self, args);
+        });
+      }
+      self[path].apply(self, response, body);
     }
   });
 
