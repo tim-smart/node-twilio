@@ -1,4 +1,4 @@
-var ent         = require('ent'),
+var he          = require('he'),
     querystring = require('querystring'),
     events      = require('events'),
     nest        = require('nest'),
@@ -37,7 +37,7 @@ var renderParams = function (params) {
 
   for (var i = 0, il = keys.length; i < il; i++) {
     key   = keys[i];
-    value = ent.encode('' + params[key]);
+    value = he.encode('' + params[key]);
 
     ret.push(key + '=' + '"' + value + '"');
   }
@@ -72,7 +72,7 @@ Element.prototype.add = function (element, no_encode) {
   if ('object' === typeof element || no_encode) {
     this.elements.push(element);
   } else {
-    this.elements.push(ent.encode(element));
+    this.elements.push(he.encode(element));
   }
 
   return this;

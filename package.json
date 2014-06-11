@@ -4,11 +4,11 @@
   "description": "Simple TwilioML and conversation helper library.",
   "repository": {
     "type": "git",
-    "url": "http://github.com/votizen/node-twilio.git"
+    "url": "http://github.com/tim-smart/node-twilio.git"
   },
   "main": "./",
   "bugs": {
-    "web": "http://github.com/votizen/node-twilio/issues"
+    "url": "https://github.com/tim-smart/node-twilio/issues"
   },
   "author": "Votizen Inc. <admin@votizen.com>",
   "licenses": [{
@@ -18,7 +18,7 @@
     "node": ">=0.4.2"
   },
   "dependencies": {
-    "ent": ">=0.0.1",
+    "he": ">=0.4.1",
     "nest": ">=0.0.1"
   }
 }
